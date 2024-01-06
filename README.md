@@ -16,18 +16,16 @@ Example:
 
 In the following position:
 
-```
-8  ♜ ♞ ♝ ♛ . ♚ . ♜
-7  ♟︎ ♟︎ . ♝ ♟︎ ♙ ♞ ♟︎
-6  . . . ♙ . . . .
-5  ♟︎ . . . . . ♟︎ ♕
-4  . . . . . . . .
-3  . . . . . ♙ . .
-2  . ♙ ♙ ♙ ♙ ♖ ♗ .
-1  ♖ ♘ ♗ . ♔ . ♘ .
-
-   A B C D E F G H
-```
+|   | A | B | C | D | E | F | G | H |
+|---|---|---|---|---|---|---|---|---|
+| 8 | ♜ | ♞ | ♝ | ♛ |   | ♚ |   | ♜ |
+| 7 | ♟︎ | ♟︎ |   | ♝ | ♟︎ | ♙ | ♞ | ♟︎ |
+| 6 |   |   |   | ♙ |   |   |   |   |
+| 5 | ♟︎ |   |   |   |   |   | ♟︎ | ♕ |
+| 4 |   |   |   |   |   |   |   |   |
+| 3 |   |   |   |   |   | ♙ |   |   |
+| 2 |   | ♙ | ♙ | ♙ | ♙ | ♖ | ♗ |   |
+| 1 | ♖ | ♘ | ♗ |   | ♔ |   | ♘ |   |
 
 - The black rook on `A8` only has the knight move, `rA8B6`, since on its left (from black's perspective) there is a knight.
 - The white queen on `H5` only has the pawn move, `QH5H6`, since on its left (from white's perspective) there is a pawn.
