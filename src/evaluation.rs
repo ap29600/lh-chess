@@ -85,14 +85,21 @@ pub fn evaluate(pos: &position::Position) -> isize {
         position::Color::White =>  1,
     };
 
-    let material_evaluation = sign * (
+    let material_evaluation =
         (pos.white.pawns.size()   as isize - pos.black.pawns.size()   as isize)                +
         (pos.white.knights.size() as isize - pos.black.knights.size() as isize) * KNIGHT_VALUE +
         (pos.white.bishops.size() as isize - pos.black.bishops.size() as isize) * BISHOP_VALUE +
         (pos.white.rooks.size()   as isize - pos.black.rooks.size()   as isize) * ROOK_VALUE   +
-        (pos.white.queens.size()  as isize - pos.black.queens.size()  as isize) * QUEEN_VALUE  );
+        (pos.white.queens.size()  as isize - pos.black.queens.size()  as isize) * QUEEN_VALUE;
 
     let virt = pos.to_virtual_position();
+    let virt_evaluation =
+        (virt.white.pawns.size()   as isize - virt.black.pawns.size()   as isize)                +
+        (virt.white.knights.size() as isize - virt.black.knights.size() as isize) * KNIGHT_VALUE +
+        (virt.white.bishops.size() as isize - virt.black.bishops.size() as isize) * BISHOP_VALUE +
+        (virt.white.rooks.size()   as isize - virt.black.rooks.size()   as isize) * ROOK_VALUE   +
+        (virt.white.queens.size()  as isize - virt.black.queens.size()  as isize) * QUEEN_VALUE;
+
     let mut piece_happiness = 0;
     for (white_board, black_board, mask, weight) in [
         (virt.white.pawns.0,   virt.black.pawns.0,   PAWN_MASK,   1),
@@ -103,11 +110,8 @@ pub fn evaluate(pos: &position::Position) -> isize {
         (pos.white.kings.0,    pos.black.kings.0,    KING_MASK,   20),
     ] {
         piece_happiness += weight 
-            * sign 
             * ( (white_board & mask).count_ones() as isize - (black_board & byte_swap(mask)).count_ones() as isize);
     }
-
-
 
     let mobility_score = |piece|  match piece {
         position::Piece::Queen  => 10,
@@ -123,5 +127,5 @@ pub fn evaluate(pos: &position::Position) -> isize {
         mobility_score(pos.black.piece_at(pos.black.kings.into_iter().next().unwrap()).unwrap());
 
 
-    material_evaluation * 10000 + piece_happiness * 100
+    sign * (material_evaluation * 10000 + virt_evaluation * 1000 + piece_happiness * 100)
 }

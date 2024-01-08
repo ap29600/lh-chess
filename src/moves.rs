@@ -2,7 +2,7 @@ use crate::position::{Square, SquareDiff, Position, Color, BitBoard, Piece};
 use crate::evaluation;
 use std::collections::HashMap;
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 pub struct Move {
     pub moved_piece: Piece, 
     pub from: Square, 
@@ -184,6 +184,15 @@ pub struct Engine {
 
 
 impl Engine {
+    pub fn from_position(pos: &Position, depth: isize) -> Self {
+        Engine{
+            game_history: vec![pos.clone()],
+            recursion_depth_soft_cap: depth,
+            recursion_depth_hard_cap: depth + 3,
+            // evaluation_cache: HashMap::new(),
+        }
+    }
+
     pub fn new() -> Self {
         Engine{
             game_history: vec![Position::try_from(
